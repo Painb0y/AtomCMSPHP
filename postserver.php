@@ -1,5 +1,4 @@
-<?php 
-  require 'core/core.php';
+<?php
   require 'controllers/postServerController.php';
 ?>
 <!DOCTYPE html>
@@ -24,30 +23,36 @@
               <div class="news">
                  <div class="title blue"><h3>Publicar tú Hotel</h3></div>
                   <div class="wp-content">
+                  <?php
+                  $owner = $_SESSION['user'];
+                  $ownerHotel = $conexion->prepare('SELECT * FROM servers WHERE owner = :owner');
+                  $ownerHotel->execute(array(':owner' => $owner));
+                  $ownerHotel = $ownerHotel->fetch();
+                  ?>
                    <?php if(isset($_SESSION['user'])): ?>
-                   <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="POST" name="register">
+                   <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="POST" name="postServer">
 
                      <i class="fa fa-h-square" aria-hidden="true"></i>
-                     <input type="text" name="hotel" placeholder="Nombre de tú hotel">
+                     <input type="text" required autocomplete="off" name="hotel" placeholder="Nombre de tú hotel">
                      <label for="hotel">Este será el nombre que se mostrara en el top</label>
 
                      <i class="fa fa-link" aria-hidden="true"></i>
-                     <input type="url" name="url" placeholder="Url del sitio">
+                     <input type="url" required autocomplete="off" name="url" placeholder="Url del sitio">
                      <label for="url">Introduce la url de tú hotel</label>
 
-                     <select class="hoteltype" name="hoteltype">
+                     <select class="hoteltype" required autocomplete="off" name="hoteltype">
                         <option value="holo">Holo</option>
                         <option value="retro">Retro</option>
                      </select>
                      <label for="hoteltype">Introduce el tipo de servidor</label>
 
                      <i class="fa fa-picture-o" aria-hidden="true"></i>
-                     <input type="url" name="banner" placeholder="Banner 664 x 129">
+                     <input type="url"  name="banner" placeholder="Banner 664 x 129">
                      <label for="hoteltype">Introduce la url de tú banner para el top</label>
 
-                     <textarea name="test"></textarea>
+                     <textarea name="description"></textarea>
 
-                      <input class="control register button" type="submit" name="register" required autocomplete="off" onclick="register.submit()" value="Publicar">
+                      <input class="control register button"  type="submit" name="post" value="Publicar">
 
                       <?php if (!empty($errors)): ?>
                          <div class="errors"><?php echo $errors;?></div>
@@ -56,7 +61,6 @@
                     <?php else: ?>
                       <div class="errors"><h3>Debes estar registrado para poder publicar tú holo, <a href="register">Click Aquí para registrarte<a/> o <a href="login">Inicia sesión</a></h3></div>
                     <?php endif; ?>
-
                   </div>
               </div>
           </div>

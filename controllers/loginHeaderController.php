@@ -1,5 +1,5 @@
 <?php
-
+session_start(); 
   // Preguntamos si se han enviado datos por POST
   if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -10,7 +10,7 @@
   	    if (!empty($_POST['user']) && !empty($_POST['password'])) {
 
         // Almacenamos los datos enviados.
-        $user = $_POST['user']; 
+        $user = $_POST['user'];
         $password = $_POST['password'];
 
           //Aplicamos los mismos filtros utilizados en el registro para el usuario y así hacer que el usuario ingresado coinsida con el de la base de datos en caso de que exista.
@@ -35,13 +35,13 @@
   	   	    	  if (!$errores) {
 
   	   	    	  	   session_start();
-  	   	    	  	   
+
   	   	    	  	   $_SESSION['user'] = $user;
   	   	    	  	   $_SESSION['password'] = $password;
 
   	   	    	  	   header('Location: index');
   	   	    	  }
   	   	    }
-  	    } 
+  	    }
   }
 ?>

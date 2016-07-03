@@ -1,10 +1,9 @@
 <?php
   require '/core/core.php';
-
 // Preguntamos si se han enviado datos por POST
   if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       // Almacenamos los datos enviados.
-  	    $user = $_POST['user']; 
+  	    $user = $_POST['user'];
   	    $password = $_POST['password'];
 
        // Creamos una variable para almacenar errores.
@@ -35,13 +34,13 @@
 
                   // Si no hay errores creamos una SESSION de usuario.
   	   	    	  	   session_start();
-  	   	    	  	   
+
   	   	    	  	   $_SESSION['user'] = $user;
   	   	    	  	   $_SESSION['password'] = $password;
 
   	   	    	  	   header('Location: index');
   	   	    	  }
   	   	    }
-  	    } 
+  	    }
   }
 ?>

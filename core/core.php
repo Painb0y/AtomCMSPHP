@@ -1,20 +1,20 @@
 <?php
-  
+
 
 // CONEXION A LA BASE DE DATOS
 //////////////////////////////////////////////////////////////////////////////////////
   $_CONFIG = [
-  'host' => 'localhost', //HOST                 
+  'host' => 'localhost', //HOST
   'db' => 'central',     //DATABASE NAME
-  'user' => 'root',      //PHPMYADMIN USER             
+  'user' => 'root',      //PHPMYADMIN USER
   'pass' => '123',       //PHPMYADMIN PASSWORD
   'site' => 'http://localhost'  //SITE URL WITH HTTP
-  ];                                            
+  ];
 ///////////////////////////////////////////////////////////////////////////////////////
 
 // Realizamos la conexion a la base de datos con los configuracion anterior.
   try {
-  	    $conexion = new PDO('mysql:host=' 
+  	    $conexion = new PDO('mysql:host='
   	    	.$_CONFIG['host'] .';dbname='
   	    	. $_CONFIG['db'],
   	    	  $_CONFIG['user'],
@@ -51,7 +51,7 @@
 
   $totalPages = ceil($totalArticles / $total);
 
-// Creamos una funcion para saber que rango tiene el usuario logeado. 
+// Creamos una funcion para saber que rango tiene el usuario logeado.
   function statement($conexion, $u){
     $statement = $conexion->prepare('SELECT * FROM usuarios WHERE user = :user');
     $statement->execute(array(':user'=> $u));
@@ -69,7 +69,7 @@
   function checkSession(){
     if (isset($_SESSION['user'])) {
          header('Location: index.php');
-    } 
+    }
   }
 
 // Creamos una clase para generar el día, mes, año y fecha actual.
@@ -96,7 +96,7 @@
      public function parameterOne($n1) {
         $this->n1 = $n1;
         echo $n1;
-         for ($i=1; $i <= 5 ; $i++) { 
+         for ($i=1; $i <= 5 ; $i++) {
                echo rand($i, 7);
          }
      }
@@ -104,7 +104,7 @@
      public function parameterTwo($n2){
        $this->n2 = $n2;
        echo $n2;
-         for ($i=1; $i <= 15 ; $i++) { 
+         for ($i=1; $i <= 15 ; $i++) {
                echo rand($i, 9);
          }
      }

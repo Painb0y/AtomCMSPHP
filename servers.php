@@ -27,7 +27,7 @@
                          <div class="server-desp">
                               <div class="data">
                               <div class="status">
-                             <?php $site = $server['url']; $online = @fsockopen($site, 80); if ($online):  ?>
+                             <?php $site = $server['url']; $site = str_replace('http://', '', $site);  $site = str_replace('https://', '', $site);$online = @fsockopen($site, 80); if ($online):  ?>
                                   <div class="online"><img src="style/img/on.gif" width="200px" height="50px"></div>
                              <?php else: ?>
                                   <div class="offline"><img src="style/img/off.gif" width="200px" height="50px"></div>

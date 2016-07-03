@@ -1,6 +1,5 @@
-<?php 
+<?php
 require '/controllers/loginHeaderController.php';
-session_start(); 
 ?>
 <header class="header" style="background-image: url(<?php echo $siteconfig['headerimg']?>); background-repeat: no-repeat; ">
 
@@ -30,7 +29,7 @@ session_start();
   	    </div>
       </div>
     <?php endif;?>
-</header>  
+</header>
 <div class="menu_bar">
     <a href="#" class="bt-menu"><i class="fa fa-list" aria-hidden="true"></i>Menu</a>
 </div>
@@ -41,16 +40,16 @@ session_start();
   	<li class="green"><a href="servers"><i class="fa fa-server" aria-hidden="true"></i>Servidores</a></li>
   	<li class="orange"><a href="postserver"><i class="fa fa-plus" aria-hidden="true"></i>Publicar Servidor</a></li>
   	<li class="purple"><a href="tools"><i class="fa fa-paper-plane" aria-hidden="true"></i>Herramientas</a></li>
-    
+
     <?php if(!isset($_SESSION['user'])): ?>
   	    <li class=""><a href="login"><i class="fa fa-sign-in" aria-hidden="true"></i>Iniciar sesión</a></li>
   	    <li class=""><a href="register">Registrarme</a></li>
     <?php endif; ?>
-    
+
     <?php if(isset($_SESSION['user']) && statement($conexion, $_SESSION['user']) === '4'): ?>
         <li class=""><a class="adm" href="acp/index.php" target="_blank"><i class="fa fa-rocket" aria-hidden="true"></i>Administración</a></li>
     <?php endif; ?>
-    
+
     <?php if(isset($_SESSION['user'])): ?>
         <li class=""><a href="logout.php"><i class="fa fa-sign-out" aria-hidden="true"></i>Cerrar Sesión</a></li>
     <?php endif; ?>
