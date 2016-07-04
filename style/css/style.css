@@ -94,10 +94,10 @@ i.fa.fa-user, i.fa.fa-lock, i.fa.fa-arrow-right, i.fa.fa-user-plus ,i.fa.fa-enve
 }
 
 i.fa.fa-user-plus ,i.fa.fa-envelope , i.fa.fa-key , i.fa.fa-h-square, i.fa.fa-link, i.fa.fa-picture-o{
-	background-color: #d1d5d8;
+	background-color: #FFFFFF;
 	border: 1px solid#a0b3b0;
 	border-radius: 1px;
-	color: #000;
+	color: #1a483f;
 	height: 38px;
 }
 
@@ -426,7 +426,7 @@ ul li.disabled{
 }
 
 .control.form.register {
-	background-color: #d1d5d8;
+	background-color: #ffffff;
 	border: 1px solid #77858e;
 	border-radius: 1px;
 	color: #0c1f1a;
@@ -435,7 +435,6 @@ ul li.disabled{
 }
 
 .control.form.register:hover {
-	border: 1px solid #1ab188;
 	border-radius: 1px;
 }
 
@@ -497,16 +496,30 @@ ul li.disabled{
 	outline:0;
 }
 
-.errors, .errors-login{
+.errors, .errors-login, .errors-postserver{
 	background-color: #FFFFF7;
 	border-radius: 3px;
 	padding: 12px;
 	margin-top: 10px;
 }
 
-.errors-login{
+.errors-login, .errors-postserver{
 	background-color: #C82647;
 	color: #FFFFFF;
+}
+
+.errors-postserver {
+	text-align: center;
+}
+
+.errors-postserver a {
+	color: #E0E4CC;
+	font-weight: 400;
+}
+
+.errors-postserver a:hover{
+	color: #FEC606;
+	transition: 1s ease-out;
 }
 
 @media (max-width: 1250px){
