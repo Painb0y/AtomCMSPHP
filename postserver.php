@@ -25,10 +25,9 @@
                   <div class="wp-content">
                    <?php if(isset($_SESSION['user'])): ?>
 
-                        <?php $owner = $_SESSION['user'];
-                            $ownerHotel = $conexion->prepare('SELECT * FROM servers WHERE owner = :owner');
-                            $ownerHotel->execute(array(':owner' => $owner));
-                            $ownerHotel = $ownerHotel->fetch(); if($ownerHotel != false): 
+                        <?php 
+                           $owner = $_SESSION['user'];
+                             if(userHotels($conexion, $owner) != false): 
                         ?>
                                  <div class="errors-postserver">
                                      <h4>Solo puedes publicar un servidor - &nbsp;&nbsp;&nbsp; <a href="perfil?page=myservers">Modificar Publicación</a></h4>
@@ -72,7 +71,7 @@
                     <?php else: ?>
                       <div class="errors-postserver"><p><h3>Debes estar registrado para poder publicar tú Habbo Hotel, <a href="register">Click Aquí para registrarte<a/> o <a href="login">Inicia sesión</a></h3></p></div>
                     <?php endif; ?>
-                   R
+  
                   </div>
               </div>
           </div>
