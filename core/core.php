@@ -51,6 +51,20 @@
 
   $totalPages = ceil($totalArticles / $total);
 
+// Almacenamos el mensaje de bienvenida del sitio en caso de que halla uno en la variable message.
+  if (!empty($siteconfig['indexmessage'])) {
+       $message = $siteconfig['indexmessage'];
+  }
+
+// Creamos una funcion para saber si un usuario ya tiene un hotel publicado
+  function userHotels($conexion, $user){
+    $ownerHotel = $conexion->prepare('SELECT * FROM servers WHERE owner = :owner');
+    $ownerHotel->execute(array(':owner' => $user));
+    $ownerHotel = $ownerHotel->fetch();
+
+      return $ownerHotel;
+  }
+
 // Creamos una funcion para saber que rango tiene el usuario logeado.
   function statement($conexion, $u){
     $statement = $conexion->prepare('SELECT * FROM usuarios WHERE user = :user');
@@ -58,11 +72,6 @@
     $statement = $statement->fetch();
 
     return $statement['rank'];
-  }
-
-// Almacenamos el mensaje de bienvenida del sitio en caso de que halla uno en la variable message.
-  if (!empty($siteconfig['indexmessage'])) {
-       $message = $siteconfig['indexmessage'];
   }
 
 // Creamos una funcion para determinar si el usuario ya tiene una SESSION iniciada.
