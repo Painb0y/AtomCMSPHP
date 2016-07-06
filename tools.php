@@ -22,9 +22,7 @@
                  <div class="title red"><h3>Noticias</h3></div>
                   <div class="wp-content">
                      <ul>
-                       <li>1</li>
-                       <li>2</li>
-                       <li>3</li>
+
                      </ul>      
                   </div>
               </div>

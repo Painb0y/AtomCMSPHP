@@ -18,7 +18,7 @@
            $banner = str_replace('<>?;', '', $banner);
            $url = str_replace('<>?;', '', $url);
 
-      $allowChacters = '.abcdefghijklmnñopqrstvwxyzABCDEFGHIJKLMNÑOPQRSTVWXYZ0123456789áéíóú-[]/!¡+ ';
+      $allowChacters = '.,abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ0123456789áéíóúÁÉÍÓÚ-[]/!¡+ ';
             for ($i=0; $i < strlen($name) ; $i++) {
                 if (strpos($allowChacters, substr($name,$i,1))===false) {
                       $errors .= '<li>El nombre del hotel contiene caracteres no permitodos.</li>';

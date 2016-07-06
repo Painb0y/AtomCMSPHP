@@ -56,6 +56,29 @@
        $message = $siteconfig['indexmessage'];
   }
 
+// Creamos una funcion para traer todas las noticias de la base de datos.
+
+class Articles {
+
+    private $news;
+
+    public function getNews($conexion){
+       $getNews = $conexion->prepare('SELECT SQL_CALC_FOUND_ROWS * FROM articles');
+       $getNews->execute();
+       $getNews = $getNews->fetch();
+
+      return $getNews;
+  }
+
+    public function totalNews($conexion){
+      $totalNews = $conexion->prepare('SELECT FOUND_ROWS() AS totalNews');
+      $totalNews = $totalNews->fetch()['totalNews'];
+
+       return $totalNews;
+    } 
+}
+
+
 // Creamos una funcion para saber si un usuario ya tiene un hotel publicado
   function userHotels($conexion, $user){
     $ownerHotel = $conexion->prepare('SELECT * FROM servers WHERE owner = :owner');
@@ -65,8 +88,71 @@
       return $ownerHotel;
   }
 
+// Creamos una funcion para extraer la dirección ip real del usuario
+
+  function getRealIp(){
+
+if(!empty($_SERVER['HTTP_X_FORWARDED_FOR']))
+   {
+      $ip = 
+         ( !empty($_SERVER['REMOTE_ADDR']) ) ? 
+            $_SERVER['REMOTE_ADDR'] 
+            : 
+            ( ( !empty($_ENV['REMOTE_ADDR']) ) ? 
+               $_ENV['REMOTE_ADDR'] 
+               : 
+               "unknown" );
+ 
+      // los proxys van añadiendo al final de esta cabecera
+      // las direcciones ip que van "ocultando". Para localizar la ip real
+      // del usuario se comienza a mirar por el principio hasta encontrar 
+      // una dirección ip que no sea del rango privado. En caso de no 
+      // encontrarse ninguna se toma como valor el REMOTE_ADDR
+ 
+      $entries = preg_split('/[, ]/', $_SERVER['HTTP_X_FORWARDED_FOR']);
+ 
+      reset($entries);
+      while (list(, $entry) = each($entries)) 
+      {
+         $entry = trim($entry);
+         if ( preg_match("/^([0-9]+\.[0-9]+\.[0-9]+\.[0-9]+)/", $entry, $ip_list) )
+         {
+            // http://www.faqs.org/rfcs/rfc1918.html
+            $private_ip = array(
+                  '/^0\./', 
+                  '/^127\.0\.0\.1/', 
+                  '/^192\.168\..*/', 
+                  '/^172\.((1[6-9])|(2[0-9])|(3[0-1]))\..*/', 
+                  '/^10\..*/');
+ 
+            $found_ip = preg_replace($private_ip, $ip, $ip_list[1]);
+ 
+            if ($ip != $found_ip)
+            {
+               $ip = $found_ip;
+               break;
+            }
+         }
+      }
+   }
+   else
+   {
+      $ip = 
+         ( !empty($_SERVER['REMOTE_ADDR']) ) ? 
+            $_SERVER['REMOTE_ADDR'] 
+            : 
+            ( ( !empty($_ENV['REMOTE_ADDR']) ) ? 
+               $_ENV['REMOTE_ADDR'] 
+               : 
+               "unknown" );
+   }
+ 
+   return $ip;
+}
+
+
 // Creamos una funcion para saber que rango tiene el usuario logeado.
-  function statement($conexion, $u){
+  function userRank($conexion, $u){
     $statement = $conexion->prepare('SELECT * FROM usuarios WHERE user = :user');
     $statement->execute(array(':user'=> $u));
     $statement = $statement->fetch();

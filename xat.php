@@ -17,30 +17,21 @@
 <body> 
   <?php require 'core/templates/header.php'; ?>
     <article class="wrapper">
-    	<article class="content">
+    	<article class="content xat">
           <div class="wp">
-               <?php if(!empty($message)): ?>
-                 <div class="title">
-                   <h3>¡Bienvenid@ a <?php echo $siteconfig['sitename'];?></h3>
-                 </div>
-                     <div class="wp-content">
-                       <div class="message">
-                         <?php echo '<p>',$message,'</p>';?>
-                       </div>
-                     </div>
-               <?php endif;?>
-    		         <div class="news">
-                    <div class="title red"><h3>Noticias</h3></div>
-                     <div class="wp-content">
-                      <?php 
-                        $noticias = new Articles();
-                        $noticias->getNews($conexion);
-                      ?>
-                     </div>
-                 </div>
+    		      <div class="news">
+                 <div class="title greystrong"><h3>Xat</h3></div>
+                  <div class="wp-content">
+                    <div class="xat code">
+                        <figure>
+                          <embed wmode="transparent" src="http://www.xatech.com/web_gear/chat/chat.swf" quality="high" width="540" height="405" name="chat" FlashVars="id=217751808" align="middle" allowScriptAccess="sameDomain" type="application/x-shockwave-flash" pluginspage="http://xat.com/update_flash.php" /><br><small><a target="_BLANK" href="http://xat.com/web_gear/?cb">Get your own Chat Box!</a> <a target="_BLANK" href="http://xat.com/web_gear/chat/go_large.php?id=217751808">Go Large!</a></small><br>
+                        </figure>
+                    </div>
+                  </div>
+              </div>
           </div>
     	</article>
-      <aside>
+      <aside class="xat-page">
          <div class="wp-aside">
             <div class="title yellow"><h3>Hoteles más votados</h3></div>
               <div class="wp-content">

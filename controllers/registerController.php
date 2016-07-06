@@ -82,6 +82,7 @@
                          );
                 }
 
+                
          // Si el captcha ha sido enviado validamos que no halla errores para insertar el usuario.
          if ($response != null && $response->success) {
 

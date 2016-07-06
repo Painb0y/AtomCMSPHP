@@ -38,7 +38,7 @@
                    <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="POST" name="postServer">
 
                      <i class="fa fa-h-square" aria-hidden="true"></i>
-                     <input type="text" required autocomplete="off" name="hotel" placeholder="Nombre de tú hotel" value="<?php if(!empty($errors) && !empty($_POST['hotel'])) echo $_POST['hotel']; ?>">
+                     <input type="text" required autocomplete="off" maxlength="65" name="hotel" placeholder="Nombre de tú hotel" value="<?php if(!empty($errors) && !empty($_POST['hotel'])) echo $_POST['hotel']; ?>">
                      <label for="hotel">Este será el nombre que se mostrara en el top</label>
 
                      <i class="fa fa-link" aria-hidden="true"></i>
