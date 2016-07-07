@@ -11,7 +11,7 @@
   ];
 ///////////////////////////////////////////////////////////////////////////////////////
 
-// Realizamos la conexion a la base de datos con los configuracion anterior.
+// Realizamos la conexion a la base de datos con la configuracion anterior.
   try {
   	    $conexion = new PDO('mysql:host='
   	    	.$_CONFIG['host'] .';dbname='
