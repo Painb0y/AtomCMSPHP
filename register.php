@@ -6,21 +6,21 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-   <meta http-equiv="X-UA-Compatible" content="IE-edge, chrome=1">
-	<title><?php echo 'Registrarse',' - ',$siteconfig['sitename']; ?></title>
-  <meta name="description" content="Registrate ahora para obtener más beneficios">
-	<link href='https://fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css'>
-  <link rel="stylesheet" href="style/css/font-awesome.min.css">
-	<link rel="stylesheet" type="text/css" href="style/css/style.css">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge, chrome=1">
+	  <title><?php echo 'Registrarse',' - ',$siteconfig['sitename']; ?></title>
+    <meta name="description" content="Registrate ahora para obtener más beneficios">
+	  <link href='https://fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="style/css/font-awesome.min.css">
+	  <link rel="stylesheet" type="text/css" href="style/css/style.css">
 </head>
 <body>
-  <?php require 'core/templates/header.php'; checkSession(); ?>
+  <?php require 'core/templates/header.php'; $userInfo = new UserInfo(); $userInfo->checkSession(); ?>
     <article class="wrapper">
     	<article class="content">
-        <div class="wp">
+         <div class="wp">
               <div class="news">
                  <div class="title"><h3>Formulario de Registro</h3></div>
-                  <div class="wp-content">
+                   <div class="wp-content">
                     <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="POST" name="register">
 
                       <label for="user"><i class="fa fa-user-plus" aria-hidden="true"></i></label>
@@ -41,12 +41,13 @@
 
                       <a href="login"><input class="control register button two" type="button" value="Login"></a>
 
-                      <?php if (!empty($errors)): ?>
-                         <div class="errors"><?php echo $errors;?></div>
-                      <?php endif;?>
-                    </form>
-                  </div>                   
-          </div>
+                       <?php if (!empty($errors)): ?>
+                          <div class="errors"><?php echo $errors;?></div>
+                       <?php endif;?>
+                     </form>
+                   </div>                   
+               </div>
+         </div>
       </article>
       <aside>
          <div class="wp-aside">

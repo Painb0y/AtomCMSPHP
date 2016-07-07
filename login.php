@@ -14,7 +14,7 @@
 	<link rel="stylesheet" type="text/css" href="style/css/style.css">
 </head>
 <body>
-  <?php require 'core/templates/header.php'; checkSession();?>
+  <?php require 'core/templates/header.php'; $userInfo = new UserInfo(); $userInfo->checkSession(); ?>
     <article class="wrapper">
     	<article class="content">
         <div class="wp">

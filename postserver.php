@@ -7,13 +7,13 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE-edge, chrome=1">
-	<title><?php echo 'Publica tu Habbo Holo',' - ',$siteconfig['sitename']; ?></title>
-  <meta name="description" content="Tienes un habbo holo?, publicalo ahora y consigue más usuarios.">
-	<link href='https://fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css'>
-  <link rel="stylesheet" href="style/css/font-awesome.min.css">
-	<link rel="stylesheet" type="text/css" href="style/css/style.css">
-  <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
-  <script>tinymce.init({ selector:'textarea' });</script>
+	  <title><?php echo 'Publica tu Habbo Holo',' - ',$siteconfig['sitename']; ?></title>
+    <meta name="description" content="Tienes un habbo holo?, publicalo ahora y consigue más usuarios.">
+	  <link href='https://fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="style/css/font-awesome.min.css">
+	  <link rel="stylesheet" type="text/css" href="style/css/style.css">
+    <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+    <script>tinymce.init({ selector:'textarea' });</script>
 </head>
 <body>
   <?php require 'core/templates/header.php'; ?>
@@ -25,10 +25,12 @@
                   <div class="wp-content">
                    <?php if(isset($_SESSION['user'])): ?>
 
-                        <?php 
+                         <?php 
+                           $userInfo = new UserInfo();
+
                            $owner = $_SESSION['user'];
-                             if(userHotels($conexion, $owner) != false): 
-                        ?>
+                            if($userInfo->userHotels($conexion, $owner) != false): 
+                         ?>
                                  <div class="errors-postserver">
                                      <h4>Solo puedes publicar un servidor - &nbsp;&nbsp;&nbsp; <a href="perfil?page=myservers">Modificar Publicación</a></h4>
                                  </div>

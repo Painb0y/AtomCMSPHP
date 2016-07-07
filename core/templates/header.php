@@ -1,5 +1,6 @@
 <?php
 require '/controllers/loginHeaderController.php';
+ $userInfo = new userInfo();
 ?>
 <header class="header" style="background-image: url(<?php echo $siteconfig['headerimg']?>); background-repeat: no-repeat; ">
 
@@ -46,7 +47,7 @@ require '/controllers/loginHeaderController.php';
   	    <li><a href="register">Registrarme</a></li>
     <?php endif; ?>
 
-    <?php if(isset($_SESSION['user']) && userRank($conexion, $_SESSION['user']) >= '3'): ?>
+    <?php if(isset($_SESSION['user']) && $userInfo->userRank($conexion, $_SESSION['user']) >= '3'): ?>
         <li><a class="adm" href="acp/index.php" target="_blank"><i class="fa fa-rocket" aria-hidden="true"></i>Administración</a></li>
     <?php endif; ?>
 

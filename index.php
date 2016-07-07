@@ -1,6 +1,5 @@
 <?php 
   require 'core/core.php';       
-
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -34,7 +33,7 @@
                      <div class="wp-content">
                       <?php 
                         $noticias = new Articles();
-                        $noticias->getNews($conexion);
+                        $noticias->getNews($conexion,5);
                       ?>
                      </div>
                  </div>

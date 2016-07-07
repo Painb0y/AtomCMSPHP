@@ -1,5 +1,5 @@
 <?php
-
+// In de document, the word c is uzing for determine conexion.
 
 // CONEXION A LA BASE DE DATOS
 //////////////////////////////////////////////////////////////////////////////////////
@@ -56,37 +56,47 @@
        $message = $siteconfig['indexmessage'];
   }
 
-// Creamos una funcion para traer todas las noticias de la base de datos.
+// Creamos una clase para extraer las noticias de la base de datos.
 
 class Articles {
 
-    private $news;
+    private $conexion;
+    private $amout;
 
-    public function getNews($conexion){
-       $getNews = $conexion->prepare('SELECT SQL_CALC_FOUND_ROWS * FROM articles');
+    public function getNews($c,$a){
+      $this->conexion = $c;
+      $this->amout = $a;
+
+       $getNews = $this->conexion->prepare("SELECT SQL_CALC_FOUND_ROWS * FROM articles");
        $getNews->execute();
-       $getNews = $getNews->fetch();
+       $getNews = $getNews->fetchAll();
 
-      return $getNews;
-  }
+       $totalNews = $this->conexion->query('SELECT FOUND_ROWS() AS totalNews');
+       $totalNews = $totalNews->fetch()['totalNews'];
 
-    public function totalNews($conexion){
-      $totalNews = $conexion->prepare('SELECT FOUND_ROWS() AS totalNews');
-      $totalNews = $totalNews->fetch()['totalNews'];
+       $ultimaNews = ($totalNews >= $this->amout) ? ($totalNews - $this->amout) : 0 ;
 
-       return $totalNews;
-    } 
+        $getUltimateNews = $this->conexion->prepare("SELECT * FROM articles LIMIT $ultimaNews,$this->amout");
+        $getUltimateNews->execute();
+        $getUltimateNews = $getUltimateNews->fetchAll();
+
+        foreach ($getUltimateNews as $news) {
+
+            if (!empty($news['articleimg'])) {
+                 $img = "<img src='".$news['articleimg']."'></img>";
+            } else {
+                 $img = "<img src='../style/img/defaultArticleImg.jpg'></img>";
+            }
+
+             echo "<div class='news image'>",$img,"</div>",
+             "<div class='news tit'>",$news['title'],"</div>",
+             "<div class='news content'>",$news['content'],"</div>",
+             "<div class='news datetime'>",$news['datetime'],"</div>";
+         } 
+      }
 }
 
 
-// Creamos una funcion para saber si un usuario ya tiene un hotel publicado
-  function userHotels($conexion, $user){
-    $ownerHotel = $conexion->prepare('SELECT * FROM servers WHERE owner = :owner');
-    $ownerHotel->execute(array(':owner' => $user));
-    $ownerHotel = $ownerHotel->fetch();
-
-      return $ownerHotel;
-  }
 
 // Creamos una funcion para extraer la dirección ip real del usuario
 
@@ -102,12 +112,6 @@ if(!empty($_SERVER['HTTP_X_FORWARDED_FOR']))
                $_ENV['REMOTE_ADDR'] 
                : 
                "unknown" );
- 
-      // los proxys van añadiendo al final de esta cabecera
-      // las direcciones ip que van "ocultando". Para localizar la ip real
-      // del usuario se comienza a mirar por el principio hasta encontrar 
-      // una dirección ip que no sea del rango privado. En caso de no 
-      // encontrarse ninguna se toma como valor el REMOTE_ADDR
  
       $entries = preg_split('/[, ]/', $_SERVER['HTTP_X_FORWARDED_FOR']);
  
@@ -151,21 +155,42 @@ if(!empty($_SERVER['HTTP_X_FORWARDED_FOR']))
 }
 
 
-// Creamos una funcion para saber que rango tiene el usuario logeado.
-  function userRank($conexion, $u){
-    $statement = $conexion->prepare('SELECT * FROM usuarios WHERE user = :user');
-    $statement->execute(array(':user'=> $u));
-    $statement = $statement->fetch();
+class UserInfo {
 
-    return $statement['rank'];
-  }
+         private $conexion;
 
-// Creamos una funcion para determinar si el usuario ya tiene una SESSION iniciada.
-  function checkSession(){
-    if (isset($_SESSION['user'])) {
-         header('Location: index.php');
-    }
-  }
+         // Creamos una funcion para saber que rango tiene el usuario logeado.
+         public function userRank($c, $u){
+           $this->conexion = $c;
+
+           $statement = $this->conexion->prepare('SELECT * FROM usuarios WHERE user = :user');
+           $statement->execute(array(':user'=> $u));
+           $statement = $statement->fetch();
+       
+              return $statement['rank'];
+         }
+
+
+         // Creamos una funcion para saber si un usuario ya tiene un hotel publicado
+
+         public function userHotels($c, $user){
+           $this->conexion = $c;
+
+             $ownerHotel = $this->conexion->prepare('SELECT * FROM servers WHERE owner = :owner');
+             $ownerHotel->execute(array(':owner' => $user));
+             $ownerHotel = $ownerHotel->fetch();
+       
+               return $ownerHotel;
+         }
+
+        // Creamos una funcion para determinar si el usuario ya tiene una SESSION iniciada.
+          public function checkSession(){
+            if (isset($_SESSION['user'])) {
+                 header('Location: index.php');
+            }
+          }
+}
+
 
 // Creamos una clase para generar el día, mes, año y fecha actual.
   class time{
