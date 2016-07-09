@@ -1,5 +1,5 @@
-<?php 
-  require 'core/core.php';       
+<?php
+  require 'core/core.php';
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -13,7 +13,7 @@
 	<link rel="stylesheet" href="style/css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="style/css/style.css">
 </head>
-<body> 
+<body>
   <?php require 'core/templates/header.php'; ?>
     <article class="wrapper">
     	<article class="content">
@@ -31,9 +31,9 @@
     		         <div class="news">
                     <div class="title red"><h3>Noticias</h3></div>
                      <div class="wp-content">
-                      <?php 
+                      <?php
                         $noticias = new Articles();
-                        $noticias->getNews($conexion,5);
+                        $noticias->getNews($conexion,4);
                       ?>
                      </div>
                  </div>
@@ -43,7 +43,7 @@
          <div class="wp-aside">
             <div class="title yellow"><h3>Hoteles más votados</h3></div>
               <div class="wp-content">
-                
+
               </div>
          </div>
       </aside>

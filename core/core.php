@@ -87,11 +87,12 @@ class Articles {
                  $img = "<img src='../style/img/defaultArticleImg.jpg'></img>";
             }
 
-             echo "<div class='news image'>",$img,"</div>",
-             "<div class='news tit'>",$news['title'],"</div>",
-             "<div class='news content'>",$news['content'],"</div>",
-             "<div class='news datetime'>",$news['datetime'],"</div>";
-         } 
+             echo "<div class='news img'><div class='url image'>",$img,"</div></div>",
+             "<div class='news info'><div class='news tit'>",$news['title'],"</div>",
+             "<div class='news content'>",substr($news['content'], 0,150),"...</div>",
+             "<div class='news datetime'>",substr($news['datetime'],0,10),"</div>",
+             "<div class='news more'><h5>Leer más</h5></div></div>";
+         }
       }
 }
 
@@ -103,33 +104,33 @@ class Articles {
 
 if(!empty($_SERVER['HTTP_X_FORWARDED_FOR']))
    {
-      $ip = 
-         ( !empty($_SERVER['REMOTE_ADDR']) ) ? 
-            $_SERVER['REMOTE_ADDR'] 
-            : 
-            ( ( !empty($_ENV['REMOTE_ADDR']) ) ? 
-               $_ENV['REMOTE_ADDR'] 
-               : 
+      $ip =
+         ( !empty($_SERVER['REMOTE_ADDR']) ) ?
+            $_SERVER['REMOTE_ADDR']
+            :
+            ( ( !empty($_ENV['REMOTE_ADDR']) ) ?
+               $_ENV['REMOTE_ADDR']
+               :
                "unknown" );
- 
+
       $entries = preg_split('/[, ]/', $_SERVER['HTTP_X_FORWARDED_FOR']);
- 
+
       reset($entries);
-      while (list(, $entry) = each($entries)) 
+      while (list(, $entry) = each($entries))
       {
          $entry = trim($entry);
          if ( preg_match("/^([0-9]+\.[0-9]+\.[0-9]+\.[0-9]+)/", $entry, $ip_list) )
          {
             // http://www.faqs.org/rfcs/rfc1918.html
             $private_ip = array(
-                  '/^0\./', 
-                  '/^127\.0\.0\.1/', 
-                  '/^192\.168\..*/', 
-                  '/^172\.((1[6-9])|(2[0-9])|(3[0-1]))\..*/', 
+                  '/^0\./',
+                  '/^127\.0\.0\.1/',
+                  '/^192\.168\..*/',
+                  '/^172\.((1[6-9])|(2[0-9])|(3[0-1]))\..*/',
                   '/^10\..*/');
- 
+
             $found_ip = preg_replace($private_ip, $ip, $ip_list[1]);
- 
+
             if ($ip != $found_ip)
             {
                $ip = $found_ip;
@@ -140,16 +141,16 @@ if(!empty($_SERVER['HTTP_X_FORWARDED_FOR']))
    }
    else
    {
-      $ip = 
-         ( !empty($_SERVER['REMOTE_ADDR']) ) ? 
-            $_SERVER['REMOTE_ADDR'] 
-            : 
-            ( ( !empty($_ENV['REMOTE_ADDR']) ) ? 
-               $_ENV['REMOTE_ADDR'] 
-               : 
+      $ip =
+         ( !empty($_SERVER['REMOTE_ADDR']) ) ?
+            $_SERVER['REMOTE_ADDR']
+            :
+            ( ( !empty($_ENV['REMOTE_ADDR']) ) ?
+               $_ENV['REMOTE_ADDR']
+               :
                "unknown" );
    }
- 
+
    return $ip;
 }
 
@@ -165,7 +166,7 @@ class UserInfo {
            $statement = $this->conexion->prepare('SELECT * FROM usuarios WHERE user = :user');
            $statement->execute(array(':user'=> $u));
            $statement = $statement->fetch();
-       
+
               return $statement['rank'];
          }
 
@@ -178,7 +179,7 @@ class UserInfo {
              $ownerHotel = $this->conexion->prepare('SELECT * FROM servers WHERE owner = :owner');
              $ownerHotel->execute(array(':owner' => $user));
              $ownerHotel = $ownerHotel->fetch();
-       
+
                return $ownerHotel;
          }
 

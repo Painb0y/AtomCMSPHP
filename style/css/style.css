@@ -7,6 +7,7 @@
 }
 
 body {
+	background-color: #2d445a;
 	font-family: 'Droid Sans', sans-serif;
 }
 
@@ -35,7 +36,7 @@ header.header {
  width: 370px;
 }
 
-.login {	
+.login {
 	display: inline-block;
 	float: right;
 	margin-right: 88px;
@@ -130,7 +131,7 @@ i.fa.fa-arrow-right:hover {
 }
 
 nav {
-	background-color: #34495E;
+	background-color: #202e3c;
 	padding: 20px;
 	margin-bottom: 20px;
 	z-index:1000;
@@ -197,7 +198,7 @@ nav li.xat.blue {
 }
 
 nav li.green{
-	border-bottom: 3px solid#4CD4B0;	
+	border-bottom: 3px solid#4CD4B0;
 }
 
 nav li.orange {
@@ -213,7 +214,7 @@ nav li.yellow {
 }
 
 article.wrapper {
-	background-color: #ECF0F1;
+	background-color: #fbfbfb;
 	border-radius: 6px;
 	margin: auto;
 	width: 90%;
@@ -241,7 +242,7 @@ article.content, aside{
 }
 
 .wp-content {
-	background-color: #D1D5D8;
+	background-color: #F0F1F5;
 	border-radius: 0px 0px 6px 6px;
 	padding: 13px;
 	margin-bottom: 20px;
@@ -250,6 +251,66 @@ article.content, aside{
 .xat.code {
 	margin: auto;
 	width: 85%;
+}
+
+.news.img, .news.info {
+	border-radius: 4px;
+	border: 3px solid #c2cfda;
+	display: inline-block;
+	vertical-align: top;
+	margin-bottom: 8px;
+	width: 20%;
+}
+
+.news.img {
+	background: #d7e9f1;
+	border-radius: 4px;
+	border: 4px solid #FFFFFF;
+	cursor: pointer;
+	height: 120px;
+	width: 120px;
+}
+
+
+.news.info{
+	background-color: #FFFFFF;
+	min-height: 120px;
+	max-height: 200px;
+	width: 80%;
+}
+
+.news.tit {
+	background-color: #00587A;
+	border-bottom: 5px solid #0e495f;
+	color: #FFFFF7;
+	cursor: pointer;
+	padding: 4px;
+	padding-left: 5px;
+	max-height: 70px;
+	min-height: 30px;
+	width: 100%;
+}
+
+.news.content, .news.datetime {
+	color: #1f3b52;
+	padding: 6px;
+	font-size: 14px;
+}
+
+.news.datetime, .news.more {
+	color: #9E9D9B;
+	display: inline-block;
+	text-align: left;
+	font-size: 12px;
+	width: 20%;
+}
+
+.news.more {
+	cursor: pointer;
+	text-align: right;
+	min-height: 25px;
+	max-height: 37px;
+	width: 75%;
 }
 
 .title {
@@ -322,7 +383,7 @@ aside {
 	margin-bottom: 27px;
 	height: auto;
 }
-.status { 
+.status {
 	display: block;
 	vertical-align: top;
 }
@@ -363,7 +424,7 @@ li.name a:hover {
 }
 
 li.type{
-	background-color: #d33257;	
+	background-color: #d33257;
     display: inline-block;
     padding-right: 6px;
     font-size: 14px;
@@ -377,7 +438,7 @@ li.type{
 
 .server-img {
 	display: block;
-    overflow: hidden;   
+    overflow: hidden;
 }
 
 
@@ -408,7 +469,7 @@ ul li.active a {
 }
 
 ul li.active:hover {
-	background-color:#ea3248; 
+	background-color:#ea3248;
 	transition: 1s ease-in-out;
 }
 
@@ -450,7 +511,7 @@ ul li.disabled{
 	color: #34495e;
 }
 
-.control.register.button  {  
+.control.register.button  {
   border:0;
   outline:none;
   border-radius:0;
@@ -473,7 +534,7 @@ ul li.disabled{
   }
 
   .control.register.button:hover {
-    background-color: #d1d5d8;  	
+    background-color: #d1d5d8;
 	outline:0;
 	border: 1px solid #1ab188;
 	color: #1ab188;
@@ -547,9 +608,9 @@ ul li.disabled{
 		width:100%;
 		position: fixed;
 		top: 0;
-		background:#34495e;
+		background:#202e3c;
 	}
- 
+
 	.menu_bar .bt-menu {
 		display: block;
 		padding: 16px;
@@ -559,7 +620,7 @@ ul li.disabled{
 		font-weight: bold;
 		text-decoration: none;
 	}
- 
+
 	.menu_bar i.fa-list {
 		float: right;
 		font-size: 25px;
@@ -572,7 +633,7 @@ nav {
 		right:100%;
 		top: 0;
 		margin: 0;
-	    overflow: scroll;
+	  overflow: scroll;
 }
 
 
@@ -633,6 +694,24 @@ nav li.red,nav li.blue,nav li.green,nav li.orange,nav li.purple, nav li.yellow {
 }
 }
 
+footer {
+	background-color: #243240;
+	min-height: 220px;
+	max-height: 400px;
+	margin-top: 30px;
+	width: 100%;
+}
+
+.footer.bottom {
+	background-color: #1b252f;
+	margin-top: 160px;
+	display: block;
+	bottom: 0;
+	min-height: 40px;
+	max-height: 200px;
+	width: 100%;
+}
+
 @media (max-width: 900px) {
 	article.content, aside{
 	display: block;
@@ -640,7 +719,7 @@ nav li.red,nav li.blue,nav li.green,nav li.orange,nav li.purple, nav li.yellow {
 }
 
    .wp{
-   	padding-left: 0px; 
+   	padding-left: 0px;
    	width: 100%;
    }
 }
@@ -653,7 +732,7 @@ i.fa.fa-user, i.fa.fa-lock, i.fa.fa-arrow-right, i.fa.fa-user-plus ,i.fa.fa-enve
 	margin-left: 0;
 }
 
-.control.register.button  {  
+.control.register.button  {
   display: block;
   margin: auto;
   margin-top: 10px;
@@ -691,13 +770,13 @@ i.fa.fa-user, i.fa.fa-lock, i.fa.fa-arrow-right, i.fa.fa-user-plus ,i.fa.fa-enve
     	max-width: 800px;
     	height: auto;
     	width: 100%;
-    }    
+    }
      .logo{
      height: 140px;
      width: 370px;
     }
 
-    .login {	
+    .login {
 	   padding-top: 50px;
 	   float: left;
 	   margin: auto;
