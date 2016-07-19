@@ -25,14 +25,14 @@
                   <div class="wp-content">
                    <?php if(isset($_SESSION['user'])): ?>
 
-                         <?php 
+                         <?php
                            $userInfo = new UserInfo();
 
                            $owner = $_SESSION['user'];
-                            if($userInfo->userHotels($conexion, $owner) != false): 
+                            if($userInfo->userHotels($conexion, $owner) != false):
                          ?>
                                  <div class="errors-postserver">
-                                     <h4>Solo puedes publicar un servidor - &nbsp;&nbsp;&nbsp; <a href="perfil?page=myservers">Modificar Publicación</a></h4>
+                                     <h4>Solo puedes publicar un servidor - &nbsp;&nbsp;&nbsp; <a href="profile?page=myservers">Modificar Publicación</a></h4>
                                  </div>
 
                   <?php else: ?>
@@ -73,7 +73,7 @@
                     <?php else: ?>
                       <div class="errors-postserver"><p><h3>Debes estar registrado para poder publicar tú Habbo Hotel, <a href="register">Click Aquí para registrarte<a/> o <a href="login">Inicia sesión</a></h3></p></div>
                     <?php endif; ?>
-  
+
                   </div>
               </div>
           </div>

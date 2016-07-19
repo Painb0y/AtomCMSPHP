@@ -1,5 +1,5 @@
 <?php
-  require '/core/core.php';
+  require 'core/core.php';
 // Preguntamos si se han enviado datos por POST
   if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       // Almacenamos los datos enviados.
@@ -22,12 +22,10 @@
   	   	    $password = hash('sha512', $password);
 
             // Ejecutamos una consulta para saber si los datos ingresados coinciden con los de algun usuario en la base de datos.
-  	   	    $searchUser = $conexion->prepare('SELECT * FROM usuarios WHERE user = :user AND password = :password LIMIT 1');
-  	   	    $searchUser->execute(array(':user' => $user, ':password' => $password));
-  	   	    $searchUser = $searchUser->fetch();
+            $statement = new Statement();
 
             // Si el resultado de la consulta es false quiere decir que el usuario no existe.
-  	   	    if ($searchUser == false) {
+  	   	    if ($statement->searchUser($conexion,$user,$password) == false) {
   	   	    	  $errors .= '<li>El usuario o la contraseña son incorrectos.</li>';
   	   	    } else {
   	   	    	  if (!$errores) {

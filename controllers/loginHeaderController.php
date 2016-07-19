@@ -1,5 +1,4 @@
 <?php
-session_start(); 
   // Preguntamos si se han enviado datos por POST
   if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 

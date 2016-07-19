@@ -26,7 +26,7 @@
                   </div>
               </div>
           </div>
-      </article>      
+      </article>
       </article>
     </article>
   <?php require 'core/templates/footer.php'; ?>

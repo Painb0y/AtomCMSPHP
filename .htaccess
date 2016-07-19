@@ -2,7 +2,7 @@ RewriteEngine On
 
 
 # Quickregister Rules
-	
+
 DirectoryIndex index.html index.php index.htm
 ErrorDocument 404 /error.php
 
@@ -10,10 +10,13 @@ RewriteRule ^index(|/)$ /index.php
 RewriteRule ^register(|/)$ /register.php
 RewriteRule ^logout(|/)$ /logout.php
 RewriteRule ^servers(|/)$ /servers.php
+RewriteRule ^post(|/)$ /post.php
 RewriteRule ^postserver(|/)$ /postserver.php
 RewriteRule ^login(|/)$ /login.php
 RewriteRule ^tools(|/)$ /tools.php
+RewriteRule ^profile(|/)$ /profile.php
 RewriteRule ^xat(|/)$ /xat.php
+RewriteRule ^team(|/)$ /team.php
 RewriteRule ^error(|/)$ /webdav/
 RewriteRule ^error(|/)$ /error.php
 RewriteRule ^mantenimiento(|/)$ /mantenimiento.php

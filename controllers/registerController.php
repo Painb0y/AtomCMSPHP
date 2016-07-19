@@ -1,6 +1,6 @@
 <?php 
 
-  require '/core/core.php';
+  require 'core/core.php';
   require_once "core/templates/libs/recaptchalib.php";
 
 // Preguntamos si se ha dado click en el boton de registrar

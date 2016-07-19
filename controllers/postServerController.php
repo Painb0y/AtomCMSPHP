@@ -1,5 +1,5 @@
 <?php
-  require '/core/core.php';
+  require 'core/core.php';
 
 
  if ($_SERVER['REQUEST_METHOD'] == 'POST') {

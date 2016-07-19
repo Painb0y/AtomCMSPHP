@@ -2,14 +2,12 @@
 require '/controllers/loginHeaderController.php';
  $userInfo = new userInfo();
 ?>
-<header class="header" style="background-image: url(<?php echo $siteconfig['headerimg']?>); background-repeat: no-repeat; ">
+<header class="header" style="background-image: url(<?php echo $siteconfig['headerimg']?>);  ">
 
   <?php if(!empty($siteconfig['sitelogo'])): ?>
      <div class="logo"><a href="<?php echo $_CONFIG['site'];?>"><img src="<?php echo $siteconfig['sitelogo'];?>" width="370px" height="140px"></img></a></div>
-  <?php endif;?>
-
-  <?php if(!empty($siteconfig['name']) && empty($siteconfig['sitelogo'])): ?>
-      <div class="nametext"><a href="<?php echo $_CONFIG['site'];?>"><h1><?php echo $siteconfig['name'];?>"</h1></a></div>
+  <?php else: ?>
+      <div class="nametext"><a href="<?php echo $_CONFIG['site'];?>"><h1><?php echo $siteconfig['sitename'];?></h1></a></div>
   <?php endif;?>
 
    <?php if($siteconfig['activatehlogin'] == 1 && !isset($_SESSION['user'])): ?>
@@ -18,7 +16,7 @@ require '/controllers/loginHeaderController.php';
   		         <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST" name="headerlog">
   		             <i class="fa fa-user" aria-hidden="true"></i>
   			           <input class="user green"type="text" name="user" placeholder="Usuario" id="user">
-  
+
   			           <i class="fa fa-lock" aria-hidden="true"></i>
   			           <input class="user red" type="password" name="password" placeholder="Contraseña">
 
@@ -47,8 +45,8 @@ require '/controllers/loginHeaderController.php';
   	    <li><a href="register">Registrarme</a></li>
     <?php endif; ?>
 
-    <?php if(isset($_SESSION['user']) && $userInfo->userRank($conexion, $_SESSION['user']) >= '3'): ?>
-        <li><a class="adm" href="acp/index.php" target="_blank"><i class="fa fa-rocket" aria-hidden="true"></i>Administración</a></li>
+    <?php if(isset($_SESSION['user']) && $userInfo->userRank($conexion, $_SESSION['user']) >= 3): ?>
+        <li><a class="adm" href="acp/login.php" target="_blank"><i class="fa fa-rocket" aria-hidden="true"></i>Administración</a></li>
     <?php endif; ?>
 
     <?php if(isset($_SESSION['user'])): ?>

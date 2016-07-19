@@ -23,6 +23,7 @@
   	   die();
   }
 
+session_start();
 
 // Ejecutamos una consulta para traer toda la configuración del sitio.
   $siteconfig = $conexion->prepare('SELECT * FROM siteconfig');
@@ -47,12 +48,95 @@
 // Calculamos el total de paginas que habrán.
   $totalArticles = $conexion->query('SELECT FOUND_ROWS() AS total');
   $totalArticles = $totalArticles->fetch()['total'];
-
   $totalPages = ceil($totalArticles / $total);
+
 
 // Almacenamos el mensaje de bienvenida del sitio en caso de que halla uno en la variable message.
   if (!empty($siteconfig['indexmessage'])) {
        $message = $siteconfig['indexmessage'];
+  }
+
+// Creamos una clase para buscar usuarios en la base de datos
+class Statement {
+
+   protected $conexion;
+   protected $user;
+   protected $password;
+
+   public function searchUser($c, $u, $p){
+
+      $this->conexion = $c;
+      $this->user = $u;
+      $this->password = $p;
+
+     $searchUser = $this->conexion->prepare('SELECT * FROM usuarios WHERE user = :user AND password = :password LIMIT 1');
+     $searchUser->execute(array(':user' => $this->user, ':password' => $this->password));
+     $searchUser = $searchUser->fetch();
+
+      return $searchUser;
+   }
+}
+
+// Creamos una clase para traer información de noticas y servidores.
+
+class PostInfo {
+
+    protected $conexion;
+
+    public function getArticleInfo($c) {
+      $this->conexion = $c;
+
+      if (!empty($_GET['article'])) {
+
+        $articleId = (int)$_GET['article'];
+
+        $getArticleInfo = $this->conexion->prepare('SELECT * FROM articles WHERE id = :id LIMIT 1');
+        $getArticleInfo->execute(array(':id' => $articleId));
+        $getArticleInfo = $getArticleInfo->fetch();
+
+        if ($getArticleInfo == false) {
+              header('Location: error');
+        }
+         return $getArticleInfo;
+      }
+    }
+
+    public function getServerInfo($c){
+        $this->conexion = $c;
+
+        $serverId = (int)$_GET['server'];
+
+        $getServerInfo = $this->conexion->prepare('SELECT * FROM servers WHERE id = :id LIMIT 1');
+        $getServerInfo->execute(array(':id' => $serverId));
+        $getServerInfo = $getServerInfo->fetch();
+
+        if ($getServerInfo == false) {
+              header('Location: error');
+        }
+         return $getServerInfo;
+      }
+
+  }
+
+
+  class GetRanks {
+    protected $conexion;
+
+     public function ranks($c){
+       $this->conexion = $c;
+
+       $ranks = $this->conexion->prepare('SELECT SQL_CALC_FOUND_ROWS * FROM ranks');
+       $ranks->execute();
+       $ranks = $ranks->fetchAll();
+
+       $totalRanks = $this->conexion->query('SELECT FOUND_ROWS() AS totalRanks');
+       $totalRanks = $totalRanks->fetch()['totalRanks'];
+       $totalRanks = $totalRanks + 1;
+
+        foreach ($ranks as $rank) {
+         echo "<option value='",$rank['id'],"'>",$rank['name'],"</option>";
+       }
+     }
   }
 
 // Creamos una clase para extraer las noticias de la base de datos.
@@ -78,6 +162,7 @@ class Articles {
         $getUltimateNews = $this->conexion->prepare("SELECT * FROM articles LIMIT $ultimaNews,$this->amout");
         $getUltimateNews->execute();
         $getUltimateNews = $getUltimateNews->fetchAll();
+        $getUltimateNews = array_reverse($getUltimateNews);
 
         foreach ($getUltimateNews as $news) {
 
@@ -87,11 +172,11 @@ class Articles {
                  $img = "<img src='../style/img/defaultArticleImg.jpg'></img>";
             }
 
-             echo "<div class='news img'><div class='url image'>",$img,"</div></div>",
-             "<div class='news info'><div class='news tit'>",$news['title'],"</div>",
+             echo "<a href='post?article=",$news['id'],"'><div class='news img'><div class='url image'>",$img,"</div></div></a>",
+             "<a href='post?article=",$news['id'],"'><div class='news info'><div class='news tit'>",$news['title'],"</div></a>",
              "<div class='news content'>",substr($news['content'], 0,150),"...</div>",
              "<div class='news datetime'>",substr($news['datetime'],0,10),"</div>",
-             "<div class='news more'><h5>Leer más</h5></div></div>";
+             "<a href='post?article=",$news['id'],"'><div class='news more'><h5>Leer más</h5></div></a></div>";
          }
       }
 }
@@ -100,60 +185,8 @@ class Articles {
 
 // Creamos una funcion para extraer la dirección ip real del usuario
 
-  function getRealIp(){
 
-if(!empty($_SERVER['HTTP_X_FORWARDED_FOR']))
-   {
-      $ip =
-         ( !empty($_SERVER['REMOTE_ADDR']) ) ?
-            $_SERVER['REMOTE_ADDR']
-            :
-            ( ( !empty($_ENV['REMOTE_ADDR']) ) ?
-               $_ENV['REMOTE_ADDR']
-               :
-               "unknown" );
-
-      $entries = preg_split('/[, ]/', $_SERVER['HTTP_X_FORWARDED_FOR']);
-
-      reset($entries);
-      while (list(, $entry) = each($entries))
-      {
-         $entry = trim($entry);
-         if ( preg_match("/^([0-9]+\.[0-9]+\.[0-9]+\.[0-9]+)/", $entry, $ip_list) )
-         {
-            // http://www.faqs.org/rfcs/rfc1918.html
-            $private_ip = array(
-                  '/^0\./',
-                  '/^127\.0\.0\.1/',
-                  '/^192\.168\..*/',
-                  '/^172\.((1[6-9])|(2[0-9])|(3[0-1]))\..*/',
-                  '/^10\..*/');
-
-            $found_ip = preg_replace($private_ip, $ip, $ip_list[1]);
-
-            if ($ip != $found_ip)
-            {
-               $ip = $found_ip;
-               break;
-            }
-         }
-      }
-   }
-   else
-   {
-      $ip =
-         ( !empty($_SERVER['REMOTE_ADDR']) ) ?
-            $_SERVER['REMOTE_ADDR']
-            :
-            ( ( !empty($_ENV['REMOTE_ADDR']) ) ?
-               $_ENV['REMOTE_ADDR']
-               :
-               "unknown" );
-   }
-
-   return $ip;
-}
-
+// Creamos una clas para extraer toda la información del usuario
 
 class UserInfo {
 
@@ -167,7 +200,7 @@ class UserInfo {
            $statement->execute(array(':user'=> $u));
            $statement = $statement->fetch();
 
-              return $statement['rank'];
+              return (int)$statement['rank'];
          }
 
 
@@ -189,6 +222,7 @@ class UserInfo {
                  header('Location: index.php');
             }
           }
+
 }
 
 
@@ -230,4 +264,83 @@ class UserInfo {
      }
   }
 
+  // Creamos una variable para almacenar los errores.
+  $errors = '';
+
+  // Creamos una variable para almacenar los mensajes existosos
+  $success = '';
+
+
+  if(isset($_POST['saveconfig'])){
+       $sitename = $_POST['sitename'];
+       $maintenance = $_POST['maintenance'];
+       $register = $_POST['register'];
+       $sitelogo = $_POST['urlogo'];
+       $sitedescription = $_POST['sitedescription'];
+       $activatehlogin = $_POST['activatehlogin'];
+       $indexmessage = $_POST['indexmessage'];
+
+       echo $maintenance;
+       if (!empty($sitename) or !empty($maintenance) or !empty($register) or !empty($sitelogo) or !empty($sitedescription) or !empty($indexmessage)) {
+            $updateConfig = $conexion->prepare('UPDATE siteconfig SET
+                sitename = :sitename,
+                maintenance = :maintenance,
+                register = :register,
+                sitelogo = :sitelogo,
+                sitedescription = :sitedescription,
+                activatehlogin = :activatehlogin,
+                indexmessage = :indexmessage
+              ');
+
+            $updateConfig->execute(array(
+              ':sitename' => $sitename,
+              ':maintenance' => $maintenance,
+              ':register' => $register,
+              ':sitelogo' => $sitelogo,
+              ':sitedescription' => $sitedescription,
+              ':activatehlogin' => $activatehlogin,
+              ':indexmessage' => $indexmessage
+            ));
+
+
+
+            if ($updateConfig != false) {
+              $success .= '<li>Se ha actualizado la configuración del sitio.</li>';
+              header('Location: siteconfig.php');
+            }
+
+       }
+  }
+
+if (isset($_POST['saverank'])) {
+     $userName = $_POST['username'];
+     $rank = $_POST['rank'];
+     $userInfo = new userInfo();
+
+     $userName = strtolower($userName);
+     $userName = str_replace(' ', '', $userName);
+     $userName = filter_var($userName, FILTER_SANITIZE_STRING);
+
+     if ($userInfo->userRank($conexion, $_SESSION['user']) <= 3) {
+       $errors .= '<li>No tienes permiso para modificar rangos.</li>';
+     } else {
+         if (empty($userName) or empty($rank)) {
+               $errors .= '<li>Debes ingresar todos los datos</li>';
+         }
+
+         $searchUserRegister = $conexion->prepare('SELECT * FROM usuarios WHERE user = :user LIMIT 1');
+         $searchUserRegister->execute(array(':user' => $userName));
+         $searchUserRegister = $searchUserRegister->fetch();
+
+         if($searchUserRegister == false) {
+           $errors .= '<li>El usuario no existe</li>';
+         }
+
+         if (!$errors) {
+           $updateRank = $conexion->prepare('UPDATE usuarios SET rank = :rank WHERE user = :user');
+           $updateRank->execute(array(':rank' => $rank, ':user' => $userName));
+           $success .= '<li>Se ha modificado el rango con éxito.</li>';
+         }
+    }
+}
 ?>
